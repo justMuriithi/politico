@@ -214,6 +214,9 @@ a {
 @media(max-width:600px){
     .col-md-2{
         width: 100%;
+     }
+    .col-md-3{
+	width: 100%;
     }
     .container{
         padding-left: 0px;
