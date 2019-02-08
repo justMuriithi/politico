@@ -211,22 +211,7 @@ a {
 .button-center {
   text-align:center;
 }
-@media screen and (min-width:901px ){
-    .col-md-2{
-        width: 100%;
-     }
-    .col-md-3{
-	width: 40%;
-    }
-    .col-md-1{
-	width: 100%;
-    }
-    .container{
-        padding-left: 0px;
-    }
-
-}
-@media screen and (max-width:900px){
+@media screen and (max-width:600px){
     .col-md-2{
         width: 100%;
      }
