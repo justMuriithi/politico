@@ -227,4 +227,116 @@ a {
 
 }
 
+.fixed-nav-bar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+ 
+}
+
+.fixed-nav-bar li a {
+  display: block;
+  padding: 20px 20px;
+  text-decoration: none;
+}
+
+
+
+/* menu */
+
+.fixed-nav-bar .menu {
+  clear: both;
+  max-height: 0;
+  transition: max-height .2s ease-out;
+}
+
+/* menu icon */
+
+.fixed-nav-bar .menu-icon {
+  cursor: pointer;
+  float: right;
+  padding: 28px 20px;
+  position: relative;
+  user-select: none;
+}
+
+.fixed-nav-bar .menu-icon .navicon {
+  background: #333;
+  display: block;
+  height: 2px;
+  position: relative;
+  transition: background .2s ease-out;
+  width: 18px;
+}
+
+.fixed-nav-bar .menu-icon .navicon:before,
+.fixed-nav-bar .menu-icon .navicon:after {
+  background: #333;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+
+.fixed-nav-bar .menu-icon .navicon:before {
+  top: 5px;
+}
+
+.fixed-nav-bar .menu-icon .navicon:after {
+  top: -5px;
+}
+
+/* menu btn */
+
+.fixed-nav-bar .menu-btn {
+  display: none;
+}
+
+.fixed-nav-bar .menu-btn:checked ~ .menu {
+  max-height: 240px;
+}
+
+.fixed-nav-bar .menu-btn:checked ~ .menu-icon .navicon {
+  background: transparent;
+}
+
+.fixed-nav-bar .menu-btn:checked ~ .menu-icon .navicon:before {
+  transform: rotate(-45deg);
+}
+
+.fixed-nav-bar .menu-btn:checked ~ .menu-icon .navicon:after {
+  transform: rotate(45deg);
+}
+
+.fixed-nav-bar .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.fixed-nav-bar .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+  top: 0;
+}
+
+/* 48em = 768px */
+
+@media (min-width: 48em) {
+  .fixed-nav-bar li {
+    float: right;
+  }
+  .fixed-nav-bar li a {
+    padding: 20px 30px;
+    position: relative;
+
+  }
+  .fixed-nav-bar .menu {
+    clear: none;
+    float: right;
+    position: relative;
+
+    max-height: 100%;
+  }
+  .fixed-nav-bar .menu-icon {
+    display: none;
+  }
+}
+
 
