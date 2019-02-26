@@ -22,9 +22,6 @@ function onSignup() {
         return;
     }
 
-    loader = document.getElementById('load-modal');
-    loader.style.display = 'block';
-
     let payload = {
         firstname: document.getElementById('first_name').value,
         lastname: document.getElementById('last_name').value,
@@ -63,6 +60,51 @@ function onSignup() {
             displayError(data.error)
             console.log(data.status);
         }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+/**
+ * Login function
+ */
+function onLogin() {
+   
+    fetch(`${BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+        }),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 200) {
+            var user = data.data[0].user
+
+            // Save user profile to local storage
+            localStorage.setItem('token', data.data[0].token);
+            localStorage.setItem('firstname', user.firstname);
+            localStorage.setItem('lastname', user.lastname);
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('national_id', user.national_id);
+            localStorage.setItem('admin', user.admin);
+            localStorage.setItem('uid', user.id);
+            // Redirect to homepage after successful login
+            window.location.replace('user/vote.html');
+
+        }else {
+            displayError(data.error)
+            console.log(data.status);
+        }   
 
     })
     .catch((error) => {
