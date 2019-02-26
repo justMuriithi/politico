@@ -53,7 +53,7 @@ function onSignup() {
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
             // Redirect to login after successful signup
-            window.location.replace('user/login.html');
+            window.location.replace('login.html');
 
         }else {
             displayError(data.error)
@@ -96,7 +96,7 @@ function onLogin() {
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
             // Redirect to homepage after successful login
-            window.location.replace('user/vote.html');
+            window.location.replace('vote.html');
 
         }else {
             displayError(data.error)
