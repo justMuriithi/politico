@@ -40,7 +40,6 @@ function onSignup() {
     })
     .then(res => res.json())
     .then((data) => {
-        loader.style.display = 'none';
 
         console.log(data);
         if (data.status === 201) {
@@ -63,7 +62,6 @@ function onSignup() {
 
     })
     .catch((error) => {
-        loader.style.display = 'none';
         displayError('Please check your connection')
     });
 }
@@ -85,7 +83,6 @@ function onLogin() {
     })
     .then(res => res.json())
     .then((data) => {
-        loader.style.display = 'none';
 
         if (data.status === 200) {
             var user = data.data[0].user
@@ -108,7 +105,6 @@ function onLogin() {
 
     })
     .catch((error) => {
-        loader.style.display = 'none';
         displayError('Please check your connection')
     });
 }
