@@ -57,7 +57,7 @@ function onSignup() {
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
             // Redirect to login after successful signup
-            window.location.replace('login.html');
+            window.location.replace('user/login.html');
 
         }else {
             displayError(data.error)
