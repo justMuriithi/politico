@@ -191,13 +191,12 @@ function createParty() {
     .then((data) => {
 
         if (data.status === 201) {
-            var party_id = data.data[0].id;
             
             displaySuccess('Party created successfuly')
             
             setTimeout(function(){
-                 showParty(party_id);
-            }, 2000);
+                window.location.replace('admin-dash.html')
+           }, 2000);
 
         }else {
             displayError(data.error)
