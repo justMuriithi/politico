@@ -167,3 +167,44 @@ function createOffice(){
         displayError('Please check your connection')
     });
 }
+
+/**
+ * Create party function
+ */
+
+function createParty() {
+
+    let payload = {
+        name: document.getElementById('name').value,
+        hqAddress: document.getElementById('hqAddress').value,
+    }
+
+    fetch(`${BASE_URL}/parties`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 201) {
+            var party_id = data.data[0].id;
+            
+            displaySuccess('Party created successfuly')
+            
+            setTimeout(function(){
+                 showParty(party_id);
+            }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
+    });
+}
