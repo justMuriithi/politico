@@ -96,7 +96,12 @@ function onLogin() {
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
             // Redirect to homepage after successful login
-            window.location.replace('vote.html');
+            if (user.admin == false) {
+                window.location.replace('vote.html');
+            }
+            else {
+                window.location.replace('../admin/admin-dash.html');
+            }
 
         }else {
             displayError(data.error)
