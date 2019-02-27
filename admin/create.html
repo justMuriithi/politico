@@ -6,7 +6,9 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
         
             <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/nav.css">
+            <link rel="stylesheet" type="text/css" href="css/nav.css">
+            <script src="../js/main.js"></script>
+
         
                 <title>Politico</title>
         </head>
@@ -31,9 +33,9 @@
 
                 <div class="col-md-2">
                         <div class="content-section">
-                        <form method="GET" action="">
+                        <form onsubmit="createOffice(); return false;">
                                <fieldset class="form-group">
-                                   <legend class="border-bottom mb-1">Create Party</legend>
+                                   <legend class="border-bottom mb-1">Create Office</legend>
                                    <div class="form-group">
                                        <label class="form-control-label" for="name">Name</label>
                                        
@@ -41,7 +43,7 @@
                                        
                                    </div>
                                    <div class="form-group">
-                                       <label class="form-control-label" for="category">HQ Address</label>
+                                       <label class="form-control-label" for="category">Category</label>
                                        
                                            <input class="form-control form-control-lg" id="category" name="category" required type="text" value="">
                                        
@@ -59,7 +61,7 @@
              <div class="content-section">
              <form method="GET" action="">
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-1">Create Office</legend>
+                        <legend class="border-bottom mb-1">Create Party</legend>
                         <div class="form-group">
                             <label class="form-control-label" for="name">Name</label>
                             

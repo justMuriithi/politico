@@ -1,5 +1,18 @@
 const BASE_URL = 'https://murmuring-atoll-51852.herokuapp.com/api/v2';
 
+function getToken(){
+    token = localStorage.getItem('token');
+    if(token)
+        return token;
+    else if (user.admin == false) {
+                window.location.replace('login.html');
+            }
+            else {
+                window.location.replace('../user/login.html');
+            }
+    return null
+}
+
 function displayError(msg){
     document.getElementById('snackbar').innerText = msg
     document.getElementById('snackbar').style.backgroundColor = '#d32f2f';
@@ -107,6 +120,42 @@ function onLogin() {
             displayError(data.error)
             console.log(data.status);
         }   
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
+    });
+}
+
+/**
+ * Create office function
+ */
+function createOffice(){
+    fetch(`${BASE_URL}/offices`, {
+        method: 'POST',
+        headers:{
+            'Content-type':'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({
+            name: document.getElementById('name').value,
+            category: document.getElementById('category').value
+        })
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 201) {
+
+            displaySuccess('Office created successfuly')
+            
+            setTimeout(function(){
+                 window.location.replace('admin-dash.html')
+            }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
 
     })
     .catch((error) => {
