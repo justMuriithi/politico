@@ -12,7 +12,11 @@ function getToken(){
             }
     return null
 }
-
+function displaySuccess(msg){
+    document.getElementById('snackbar').innerText = msg
+    document.getElementById('snackbar').style.backgroundColor = '#1abc9c';
+    showSnackbar();
+}
 function displayError(msg){
     document.getElementById('snackbar').innerText = msg
     document.getElementById('snackbar').style.backgroundColor = '#d32f2f';
@@ -155,6 +159,7 @@ function createOffice(){
 
         }else {
             displayError(data.error)
+            console.log(data.status);
         }
 
     })
