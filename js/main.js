@@ -176,7 +176,7 @@ function createParty() {
 
     let payload = {
         name: document.getElementById('name').value,
-        hqAddress: document.getElementById('hqAddress').value,
+        hqaddress: document.getElementById('hqaddress').value,
     }
 
     fetch(`${BASE_URL}/parties`, {
