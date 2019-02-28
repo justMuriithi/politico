@@ -174,18 +174,16 @@ function createOffice(){
 
 function createParty() {
 
-    let payload = {
-        name: document.getElementById('name').value,
-        hqaddress: document.getElementById('hqaddress').value,
-    }
-
     fetch(`${BASE_URL}/parties`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${getToken()}`
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+            name: document.getElementById('name').value,
+            hqaddress: document.getElementById('hqaddress').value
+        })
     })
     .then(res => res.json())
     .then((data) => {
@@ -200,6 +198,7 @@ function createParty() {
 
         }else {
             displayError(data.error)
+            console.log(data.status);
         }
 
     })
@@ -207,3 +206,4 @@ function createParty() {
         displayError('Please check your connection')
     });
 }
+
