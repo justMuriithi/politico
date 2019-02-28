@@ -12,6 +12,12 @@ function getToken(){
             }
     return null
 }
+function createNode(type, id, clazz){
+    const node = document.createElement(type);
+    node.classList.add(clazz);
+    node.id = id;
+    return node;
+}
 function displaySuccess(msg){
     document.getElementById('snackbar').innerText = msg
     document.getElementById('snackbar').style.backgroundColor = '#1abc9c';
@@ -207,3 +213,107 @@ function createParty() {
     });
 }
 
+function viewParties() {
+
+    fetch(`${BASE_URL}/parties`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            parties = document.getElementById('party-list');
+
+            data.data.forEach(function(party){
+
+                let party_node = createNode('div', party.id);
+
+                party_node.innerHTML = `
+                <div class="col-md-3">
+   	                <div class="content-section">
+                        <div class="media">
+	                        <img class="rounded-circle account-img" src="images/default.jpg">
+	                        <div class="media-body">
+		                        <legend class="border-bottom mb-4">${party.name}</legend>
+                                <p class="text-secondary">${party.hqaddress}</p>
+		                    </div>
+	                    </div>
+	                 </div>
+                </div>
+                `
+                parties.appendChild(party_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection') 
+    });
+}
+
+function viewOffices() {
+
+    fetch(`${BASE_URL}/offices`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            offices = document.getElementById('office-list');
+
+            data.data.forEach(function(office){
+
+                let office_node = createNode('div', office.id);
+
+                office_node.innerHTML = `
+                <div class="col-md-3">
+   	                <div class="content-section">
+                        <div class="media">
+	                        <img class="rounded-circle account-img" src="images/default.jpg">
+	                        <div class="media-body">
+		                        <legend class="border-bottom mb-4">${office.name}</legend>
+                                <h2>${office.category}</h2>
+		                    </div>
+	                    </div>
+	                 </div>
+                </div>
+                `
+                offices.appendChild(office_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection') 
+    });
+}
+
+function initHomePage(){
+    viewOffices();
+    viewParties();
+ }
