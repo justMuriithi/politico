@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
      <link rel="stylesheet" type="text/css" href="css/nav.css">
+		 <script src="../js/main.js"></script>
 
         <title>Politico</title>
 </head>
@@ -35,12 +36,9 @@
 	    <img class="rounded-circle account-img" src="images/default.jpg">
 	    <div class="media-body">
 		<legend class="border-bottom mb-4">Account Info</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	     <h2>Antoine</h2>
-		<p class="text-secondary">31607749</p>
-		<p class="text-secondary">Nairobi</p>
-		<p class="text-secondary">Starehe</p>
-		<p class="text-secondary">demo@demo.com</p>
+		<h2 id="firstname">Antoine</h2>
+		<p class="text-secondary" id="national_id">31607749</p>
+		<p class="text-secondary" id="email">demo@demo.com</p>
 	    </div>
 	  </div>
 	</div>
@@ -127,6 +125,8 @@
             </div>
 	
     </main>
-
+		<script>
+        userProfile();
+    </script>
 </body>
 </html>

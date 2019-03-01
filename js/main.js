@@ -317,3 +317,16 @@ function initHomePage(){
     viewOffices();
     viewParties();
  }
+
+ /** 
+* Profile
+*/
+function userProfile(){
+    document.getElementById('firstname').innerText = localStorage.getItem('firstname')
+    document.getElementById('national_id').innerText = localStorage.getItem('national_id')
+    document.getElementById('email').innerText = localStorage.getItem('email')
+    document.getElementById('firstname_p').innerText = localStorage.getItem('firstname')
+    document.getElementById('firstname_g').innerText = localStorage.getItem('firstname')
+    document.getElementById('firstname_m').innerText = localStorage.getItem('firstname')
+
+}
