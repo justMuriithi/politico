@@ -157,7 +157,7 @@ function createOffice(){
 
         if (data.status === 201) {
 
-            displaySuccess('Office created successfuly')
+            displaySuccess('Office created successfully')
             
             setTimeout(function(){
                  window.location.replace('admin-dash.html')
@@ -182,12 +182,12 @@ function createParty() {
 
     fetch(`${BASE_URL}/parties`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+        headers:{
+            'Content-type':'application/json',
             'authorization': `Bearer ${getToken()}`
         },
         body: JSON.stringify({
-            name: document.getElementById('name').value,
+            name: document.getElementById('party_name').value,
             hqaddress: document.getElementById('hqaddress').value
         })
     })
@@ -195,12 +195,12 @@ function createParty() {
     .then((data) => {
 
         if (data.status === 201) {
-            
-            displaySuccess('Party created successfuly')
+
+            displaySuccess('Party created successfully')
             
             setTimeout(function(){
-                window.location.replace('admin-dash.html')
-           }, 2000);
+                 window.location.replace('admin-dash.html')
+            }, 2000);
 
         }else {
             displayError(data.error)
