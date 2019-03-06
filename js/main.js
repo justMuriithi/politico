@@ -299,7 +299,7 @@ function viewOffices() {
 	                        <div class="media-body">
 		                        <legend class="border-bottom mb-4">${office.id}.${office.name}</legend>
                                 <h2>${office.category}</h2>
-                                <form">
+                                <form onsubmit="castVote(); return false;">
                                 <select name="candidate_g" id="candidate-list-${office.id}">
                                 <option value=""></option>
                                 </select>
@@ -314,6 +314,7 @@ function viewOffices() {
                 offices.appendChild(office_node);
 
                 initVotePage(office.id)
+
             });
 
         }else if(tokenError(data.status)){
@@ -405,9 +406,10 @@ function initVotePage(office_id) {
                 
                 candidate_node.innerHTML = `
                 <option value=""></option>
-                <option value="">${candidate.candidate}</option>
+                <option value="">${candidate.id}.${candidate.candidate}</option>
                 `                
                 candidates.appendChild(candidate_node);
+                castVote(candidate.id,office_id);
             });
 
         }else if(tokenError(data.status)){
@@ -422,5 +424,42 @@ function initVotePage(office_id) {
     .catch((error) => {
         displayError('Please check your connection')
         console.log(error);
+    });
+}
+
+function castVote(id, office_id) {
+
+    let payload = {
+        office: parseInt(`${office_id}`),
+        candidate: parseInt(`${id}`)
+    }
+    console.log(payload);
+
+    fetch(`${BASE_URL}/votes`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 201) {
+            console.log(data);
+
+            
+            displaySuccess(data.message);
+            console.log(data);
+
+        }else {
+            displayError(data.error)
+            console.log(data);
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
     });
 }
