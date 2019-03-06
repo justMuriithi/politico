@@ -46,75 +46,7 @@
    </div>
      <h2 class="account-heading">Choose your candidate</h2>
        <div class="row">
-	  <div class="col-md-3">
-   	     <div class="content-section">
-                  <div class="media">
-	            <img class="rounded-circle account-img" src="images/default.jpg">
-	              <div class="media-body">
-		        <legend class="border-bottom mb-4">President</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	                  <h2>Candidate1</h2>
-		            <p class="text-secondary">Kenya Party</p>
-		            <p class="text-secondary">Vote for</p>
-			<form action="">
-			  <select name="candidate_p">
-			    <option value=""></option>
-			    <option value="candidate1">Candidate1</option>
-			    <option value="wafula">Wafula Naliaka</option>
-			  </select>
-			  <br><br>
-			  <input type="submit">
-			</form>
-		      </div>
-	          </div>
-	     </div>
-            </div>
-        <div class="col-md-3">
-	   <div class="content-section">
-        	<div class="media">
-	    	<img class="rounded-circle account-img" src="images/default.jpg">
-	    	  <div class="media-body">
-		    <legend class="border-bottom mb-4">Governor</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	     		<h2>Shiko Kanyi</h2>
-			<p class="text-secondary">Independent Candidate</p>
-		            <p class="text-secondary">Vote for</p>
-			<form action="">
-			  <select name="candidate_g">
-			    <option value=""></option>
-			    <option value="kanyi">Shiko Kanyi</option>
-			    <option value="buri">Nyambura Muriithi</option>
-			  </select>
-			  <br><br>
-			  <input type="submit">
-			</form>
-		  </div>
-	  	</div>
-	   </div>
-	</div>
-        <div class="col-md-3">
-	   <div class="content-section">
-        	<div class="media">
-	    	<img class="rounded-circle account-img" src="images/default.jpg">
-	    	  <div class="media-body">
-		    <legend class="border-bottom mb-4">MP</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	     		<h2>Warui Muguro</h2>
-			<p class="text-secondary">Kenya Party</p>
-		            <p class="text-secondary">Vote for</p>
-			<form action="">
-			  <select name="candidate_m">
-			    <option value=""></option>
-			    <option value="warui">Warui Muguro</option>
-			    <option value="jamba">Jamba Nene</option>
-			  </select>
-			  <br><br>
-			  <input type="submit">
-			</form>
-	    	  </div>
-		</div>
-	  </div>
-        </div>
+				<div id="office-list"></div>
      </div>
             <div class="button-center">
 							<form method="GET" action="vote.html">
@@ -127,6 +59,8 @@
     </main>
 		<script>
         userProfile();
+        viewOffices();
     </script>
+    <div id="snackbar">Some message..</div>
 </body>
 </html>

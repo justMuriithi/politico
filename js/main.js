@@ -12,9 +12,17 @@ function getToken(){
             }
     return null
 }
-function createNode(type, id, clazz){
+
+function tokenError(status){
+    if(status === 401){
+        window.location.replace('login.html')
+        return true;
+    }
+    return false;
+}
+
+function createNode(type, id){
     const node = document.createElement(type);
-    node.classList.add(clazz);
     node.id = id;
     return node;
 }
@@ -274,10 +282,10 @@ function viewOffices() {
     })
     .then(res => res.json())
     .then((data) => {
-        
+
         if (data.status === 200) {
 
-            offices = document.getElementById('office-list');
+            var offices = document.getElementById('office-list');
 
             data.data.forEach(function(office){
 
@@ -289,8 +297,15 @@ function viewOffices() {
                         <div class="media">
 	                        <img class="rounded-circle account-img" src="images/default.jpg">
 	                        <div class="media-body">
-		                        <legend class="border-bottom mb-4">${office.name}</legend>
+		                        <legend class="border-bottom mb-4">${office.id}.${office.name}</legend>
                                 <h2>${office.category}</h2>
+                                <form">
+                                <select name="candidate_g" id="candidate-list-${office.id}">
+                                <option value=""></option>
+                                </select>
+			                    <br><br>
+			                    <input type="submit">
+                                </form>
 		                    </div>
 	                    </div>
 	                 </div>
@@ -298,6 +313,7 @@ function viewOffices() {
                 `
                 offices.appendChild(office_node);
 
+                initVotePage(office.id)
             });
 
         }else if(tokenError(data.status)){
@@ -325,8 +341,86 @@ function userProfile(){
     document.getElementById('firstname').innerText = localStorage.getItem('firstname')
     document.getElementById('national_id').innerText = localStorage.getItem('national_id')
     document.getElementById('email').innerText = localStorage.getItem('email')
-    document.getElementById('firstname_p').innerText = localStorage.getItem('firstname')
+   /**  document.getElementById('firstname_p').innerText = localStorage.getItem('firstname')
     document.getElementById('firstname_g').innerText = localStorage.getItem('firstname')
     document.getElementById('firstname_m').innerText = localStorage.getItem('firstname')
+    */
+}
 
+function registerCandidate() {
+
+    let payload = {
+        office: parseInt(document.getElementById('candidate_office').value),
+        party: parseInt(document.getElementById('candidate_party').value),
+        candidate: parseInt(document.getElementById('candidate_name').value)
+    }
+
+    fetch(`${BASE_URL}/offices/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 201) {
+            
+            displaySuccess(data.message)
+
+        }else {
+            displayError(data.error)
+            console.log(data);
+
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
+    });
+}
+
+function initVotePage(office_id) {
+    
+    fetch(`${BASE_URL}/offices/${office_id}/candidates`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            var candidates = document.getElementById(`candidate-list-${office_id}`);
+            console.log(candidates)
+
+            data.data.forEach(function(candidate){
+
+                let candidate_node = createNode('option', candidate.id);
+                
+                candidate_node.innerHTML = `
+                <option value=""></option>
+                <option value="">${candidate.candidate}</option>
+                `                
+                candidates.appendChild(candidate_node);
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+            console.log(data);
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
+        console.log(error);
+    });
 }

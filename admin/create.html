@@ -84,6 +84,38 @@
              
             </div>  
             <div class="row">
+                    <div class="col-md-2">
+                            <div class="content-section">
+                            <form onsubmit="registerCandidate(); return false;">
+                                   <fieldset class="form-group">
+                                       <legend class="border-bottom mb-1">Create Candidate</legend>
+                                       <div class="form-group">
+                                           <label class="form-control-label" for="name">Name</label>
+                                           
+                                               <input class="form-control form-control-lg" id="candidate_name" name="candidate_name" required type="number" step="1" value="">
+                                           
+                                       </div>
+                                       <div class="form-group">
+                                           <label class="form-control-label" for="candidate_office">Office</label>
+                                           
+                                               <input class="form-control form-control-lg" id="candidate_office" name="candidate_office" required type="number" step="1" value="">
+                                           
+                                       </div>
+                                       <div class="form-group">
+                                            <label class="form-control-label" for="candidate_party">Party</label>
+                                            
+                                                <input class="form-control form-control-lg" id="candidate_party" name="candidate_party" required type="number" step="1" value="">
+                                            
+                                        </div>
+                                   </fieldset>
+                                   <div class="form-group">
+                                       <input class="btn btn-outline-info" id="submit" name="submit" type="submit" value="Create">
+                                   </div>
+                               </form>
+                            </div>
+                            </div>  
+            </div>
+            <div class="row">
                     <form method="GET" action="">
 <div class="form-group">
         <input class="btn btn-outline-info" id="submit" name="submit" type="submit" value="Edit Party">
