@@ -459,6 +459,9 @@ function castVote(id, office_id) {
         }else {
             displayError(data.error)
             console.log(data);
+            viewOfficeResults(`${office_id}`);
+
+
         }
         
 
@@ -469,8 +472,22 @@ function castVote(id, office_id) {
     });
 }
 
-function viewOfficeResults(office_id) {
-    
+function viewOfficeResults(office_id = null) {
+    if (office_id==null){
+        office_id = sessionStorage.getItem('result_office_id');
+    }else{
+        sessionStorage.setItem('result_office_id',office_id);
+        setTimeout(function(){
+            window.location.replace('results.html')
+        }, 100);
+            return ;
+
+    }
+    if(office_id==null){
+        displayInfo('No office selected');
+        return;
+    }
+
     fetch(`${BASE_URL}/offices/${office_id}/result`, {
         method: 'GET',
         headers: {
@@ -482,13 +499,15 @@ function viewOfficeResults(office_id) {
     .then((data) => {
         
         if (data.status === 200) {
-            console.log(data);
+            
+
 
             var results = document.getElementById('result-list');
-
-            data.data.forEach(function(result){
-
-                let result_node = createNode('div', result.candidate);
+            data.data.forEach(function(data2){
+               data2.forEach(function(result){
+                   console.log(result);
+             
+                   let result_node = createNode('div', result.candidate);
                 
                 result_node.innerHTML = `
                 <div class="col-md-3">
@@ -508,6 +527,7 @@ function viewOfficeResults(office_id) {
                 results.appendChild(result_node);
 
             });
+        });
 
             if(data.data.length === 0){
                 displayInfo('No results for selected office')
