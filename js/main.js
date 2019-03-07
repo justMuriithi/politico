@@ -433,7 +433,7 @@ function castVote(id, office_id) {
 
     let payload = {
         office: parseInt(`${office_id}`),
-        candidate: parseInt(`${id}`)
+        candidate: parseInt(document.getElementById(`candidate-list-${office_id}`).value)
     }
     console.log(payload);
 
@@ -459,9 +459,9 @@ function castVote(id, office_id) {
         }else {
             displayError(data.error)
             console.log(data);
-            viewOfficeResults(`${office_id}`);
-
         }
+        
+
 
     })
     .catch((error) => {
@@ -484,8 +484,7 @@ function viewOfficeResults(office_id) {
         if (data.status === 200) {
             console.log(data);
 
-            results = document.getElementById('result-list');
-            console.log(results);
+            var results = document.getElementById('result-list');
 
             data.data.forEach(function(result){
 
