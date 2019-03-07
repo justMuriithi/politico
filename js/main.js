@@ -244,17 +244,26 @@ function viewParties() {
                 let party_node = createNode('div', party.id);
 
                 party_node.innerHTML = `
-                <div class="col-md-3">
    	                <div class="content-section">
                         <div class="media">
 	                        <img class="rounded-circle account-img" src="images/default.jpg">
 	                        <div class="media-body">
-		                        <legend class="border-bottom mb-4">${party.name}</legend>
+		                        <legend class="border-bottom mb-4">${party.id}.${party.name}</legend>
                                 <p class="text-secondary">${party.hqaddress}</p>
-		                    </div>
-	                    </div>
+                            </div>
+                            <form onsubmit="editParty(${party.id});return false;">
+                                <div class="form-group">
+                                    <input class="btn btn-outline-info" id="submit_edit" name="submit" type="submit" value="Edit">
+                                </div>
+                            </form>
+                            </div>
+                            <form onsubmit="deleteParty(${party.id});return false;">
+                                <div class="form-group">
+                                    <input class="btn-red btn-outline-info-red" id="submit_delete" name="submit" type="submit" value="Delete">
+                                </div>
+                            </form>
+	                    
 	                 </div>
-                </div>
                 `
                 parties.appendChild(party_node);
 
@@ -294,7 +303,6 @@ function viewOffices() {
                 let office_node = createNode('div', office.id);
 
                 office_node.innerHTML = `
-                <div class="col-md-3">
    	                <div class="content-section">
                         <div class="media">
 	                        <img class="rounded-circle account-img" src="images/default.jpg">
@@ -311,7 +319,6 @@ function viewOffices() {
 		                    </div>
 	                    </div>
 	                 </div>
-                </div>
                 `
                 offices.appendChild(office_node);
 
@@ -503,14 +510,12 @@ function viewOfficeResults(office_id = null) {
 
 
             var results = document.getElementById('result-list');
-            data.data.forEach(function(data2){
-               data2.forEach(function(result){
-                   console.log(result);
-             
-                   let result_node = createNode('div', result.candidate);
-                
+            data.data.forEach(function(result){
+                console.log(result);
+            
+                let result_node = createNode('div', result.candidate);
+            
                 result_node.innerHTML = `
-                <div class="col-md-3">
    	                <div class="content-section">
                         <div class="media">
 	                        <img class="rounded-circle account-img" src="images/default.jpg">
@@ -522,12 +527,10 @@ function viewOfficeResults(office_id = null) {
 		                    </div>
 	                    </div>
 	                </div>
-                </div>
                 `
                 results.appendChild(result_node);
 
             });
-        });
 
             if(data.data.length === 0){
                 displayInfo('No results for selected office')
@@ -544,4 +547,93 @@ function viewOfficeResults(office_id = null) {
     .catch((error) => {
         console.log(error);
     });
+}
+
+function deleteParty(party_id){
+    console.log(party_id);
+    if(!party_id) return;
+    
+
+    fetch(`${BASE_URL}/parties/${party_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    
+    .then(res => res.json())
+    .then((data) => {
+        console.log(data)
+        if (data.status === 200) {
+            console.log(data);
+            if (!confirm("You are about to delete this party")) {
+                
+            
+                displaySuccess('Party Deleted')
+                setTimeout(function(){
+                    window.location.replace('create.html')
+                }, 5000)
+                return;
+            }
+            
+            
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+function editParty(party_id){
+    if(!party_id) return;
+    
+    var new_name = prompt("Please enter new party name:", "New Name");
+    if (new_name != null){
+        let payload = {
+            name: new_name
+        }
+    
+    console.log(payload);
+   
+    fetch(`${BASE_URL}/parties/${party_id}/name`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+    })
+    
+    .then(res => res.json())
+    .then((data) => {
+        console.log(data)
+        if (data.status === 200) {
+            console.log(data)
+                
+            
+            displaySuccess('Party Edited')
+            setTimeout(function(){
+                window.location.replace('create.html')
+            }, 5000);
+            
+            
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
 }

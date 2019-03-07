@@ -132,6 +132,11 @@ main {
   border-color: #17a2b8;
   border: 3px;
 }
+.btn-outline-info-red {
+  color: #f40707;
+  border-color: #f40707;
+  border: 3px;
+}
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -140,6 +145,20 @@ main {
   vertical-align: middle;
   background-color: transparent;
   border: 3px solid #17a2b8;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-red {
+  display: inline-block;
+  font-weight: 400;
+  color: #f40707;
+  text-align: center;
+  vertical-align: middle;
+  background-color: transparent;
+  border: 3px solid #f40707;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
