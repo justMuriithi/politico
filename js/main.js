@@ -1,4 +1,6 @@
 const BASE_URL = 'https://murmuring-atoll-51852.herokuapp.com/api/v2';
+var office_ids = [];
+
 
 function getToken(){
     token = localStorage.getItem('token');
@@ -299,7 +301,7 @@ function viewOffices() {
 	                        <div class="media-body">
 		                        <legend class="border-bottom mb-4">${office.id}.${office.name}</legend>
                                 <h2>${office.category}</h2>
-                                <form onsubmit="castVote(); return false;">
+                                <form onsubmit="castVote(id,${office.id}); return false;">
                                 <select name="candidate_g" id="candidate-list-${office.id}">
                                 <option value=""></option>
                                 </select>
@@ -409,7 +411,7 @@ function initVotePage(office_id) {
                 <option value="">${candidate.id}.${candidate.candidate}</option>
                 `                
                 candidates.appendChild(candidate_node);
-                castVote(candidate.id,office_id);
+                //castVote(candidate.id,office_id);
             });
 
         }else if(tokenError(data.status)){
@@ -452,14 +454,75 @@ function castVote(id, office_id) {
             
             displaySuccess(data.message);
             console.log(data);
+            viewOfficeResults(`${office_id}`);
 
         }else {
             displayError(data.error)
             console.log(data);
+            viewOfficeResults(`${office_id}`);
+
         }
 
     })
     .catch((error) => {
         displayError('Please check your connection')
+    });
+}
+
+function viewOfficeResults(office_id) {
+    
+    fetch(`${BASE_URL}/offices/${office_id}/result`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+            console.log(data);
+
+            results = document.getElementById('result-list');
+            console.log(results);
+
+            data.data.forEach(function(result){
+
+                let result_node = createNode('div', result.candidate);
+                
+                result_node.innerHTML = `
+                <div class="col-md-3">
+   	                <div class="content-section">
+                        <div class="media">
+	                        <img class="rounded-circle account-img" src="images/default.jpg">
+	                        <div class="media-body">
+		                            <legend class="border-bottom mb-4">${result.office}</legend>
+	                                <h2>${result.candidate}</h2>
+		                            <p class="text-secondary">${result.party}</p>
+                                    <p class="text-secondary">${result.results} votes </p>
+		                    </div>
+	                    </div>
+	                </div>
+                </div>
+                `
+                results.appendChild(result_node);
+
+            });
+
+            if(data.data.length === 0){
+                displayInfo('No results for selected office')
+            }
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data);
+        }
+
+    })
+    .catch((error) => {
+        console.log(error);
     });
 }

@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/nav.css">
+		<link rel="stylesheet" type="text/css" href="css/nav.css">
+		<script src="../js/main.js"></script>
+
 
         <title>Politico</title>
 </head>
@@ -29,47 +31,13 @@
         
      <div class="account-heading"><h2>Election Winners</h2></div>
        <div class="row">
-	  <div class="col-md-3">
-   	     <div class="content-section">
-                  <div class="media">
-	            <img class="rounded-circle account-img" src="images/default.jpg">
-	              <div class="media-body">
-		        <legend class="border-bottom mb-4">President</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	                  <h2>John Doe</h2>
-		            <p class="text-secondary">Kenya Party</p>
-		      </div>
-	          </div>
-	     </div>
-            </div>
-        <div class="col-md-3">
-	   <div class="content-section">
-        	<div class="media">
-	    	<img class="rounded-circle account-img" src="images/default.jpg">
-	    	  <div class="media-body">
-		    <legend class="border-bottom mb-4">Governor</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	     		<h2>John Doe</h2>
-			<p class="text-secondary">Kenya Party</p>
-		  </div>
-	  	</div>
-	   </div>
-	</div>
-        <div class="col-md-3">
-	   <div class="content-section">
-        	<div class="media">
-	    	<img class="rounded-circle account-img" src="images/default.jpg">
-	    	  <div class="media-body">
-		    <legend class="border-bottom mb-4">MP</legend>
-	     <!-- <h2 class="account-heading">Antoine</h2>-->
-	     		<h2>John Doe</h2>
-			<p class="text-secondary">Kenya Party</p>
-	    	  </div>
-		</div>
-	  </div>
+				<div id="result-list"></div>
         </div>
      </div>
     </main>
-
+		<script>
+		initVotePage();
+		</script>
+		<div id="snackbar">Some message..</div>
 </body>
 </html>
