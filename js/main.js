@@ -637,3 +637,77 @@ function editParty(party_id){
     });
 }
 }
+
+function onResetPassword() {
+
+    let email = document.getElementById('email').value;
+   
+    fetch(`${BASE_URL}/auth/reset`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email
+        }),
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 200) {
+
+            displaySuccess(data.data[0].message);
+
+        }else {
+            displayError('Please provide a valid email');
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection');
+    });
+}
+
+function resetPassword() {
+
+    let password = document.getElementById('password').value
+    let confirm_password = document.getElementById('confirm_password').value
+    if (password !== confirm_password){
+        displayError('Passwords do not match');
+        return;
+    }
+
+    let token = location.search.replace("?token=", "");
+    
+    let payload = {
+        password: password
+    }
+
+    fetch(`${BASE_URL}/reset-password`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 200) {
+
+            displaySuccess('Your password has been updated')
+            
+            setTimeout(function(){
+                 window.location.replace('login.html')
+            }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        displayError('Please check your connection')
+    });
+}
