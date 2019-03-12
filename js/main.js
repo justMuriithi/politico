@@ -711,3 +711,57 @@ function resetPassword() {
         displayError('Please check your connection')
     });
 }
+
+function viewVotingHistory() {
+
+    fetch(`${BASE_URL}/voting-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {        
+
+        if (data.status === 200) {
+            results = document.getElementById('voting-history');
+
+            data.data.forEach(function(result){
+
+                let result_node = createNode('div', '');
+                
+                result_node.innerHTML = `
+   	                <div class="content-section">
+                        <div class="media">
+	                    <img class="rounded-circle account-img" src="images/default.jpg">
+	                        <div class="media-body">
+		                    <legend class="border-bottom mb-4">${result.office}</legend>
+	                        <h2>${result.candidate}</h2>
+		                    <p class="text-secondary">${result.party}</p>
+		                </div>
+	                </div>
+                `
+               
+                results.appendChild(result_node);
+
+            });
+
+            if(data.data.length == 0){
+                let notyet = createNode('h3', 'not-yet');
+                notyet.innerText ='You have not voted for any candidate yet'
+                results.appendChild(notyet);
+            }
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
